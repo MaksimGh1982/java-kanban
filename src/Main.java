@@ -16,9 +16,9 @@ public class Main {
         taskManager.addEpic(epic1);
         taskManager.addEpic(epic2);
 
-        SubTask subtask1 = new SubTask("subtask1","subtask1111",epic1);
-        SubTask subtask2 = new SubTask("subtask2","subtask22222",epic1);
-        SubTask subtask3 = new SubTask("subtask3","subtask33333",epic2);
+        SubTask subtask1 = new SubTask("subtask1","subtask1111",epic1.getId());
+        SubTask subtask2 = new SubTask("subtask2","subtask22222",epic1.getId());
+        SubTask subtask3 = new SubTask("subtask3","subtask33333",epic2.getId());
         taskManager.addSubTask(subtask1);
         taskManager.addSubTask(subtask2);
         taskManager.addSubTask(subtask3);
@@ -26,6 +26,7 @@ public class Main {
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpic());
+        System.out.println(taskManager.getSubTaskByEpic(2));
 
         SubTask subtask = taskManager.getSubTask(6);
         subtask.setStatus(Status.DONE);
@@ -34,6 +35,11 @@ public class Main {
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpic());
+
+        /*taskManager.delEpic(2);
+        System.out.println(taskManager.getAllTask());
+        System.out.println(taskManager.getAllSubTask());
+        System.out.println(taskManager.getAllEpic());*/
 
         subtask = taskManager.getSubTask(4);
         subtask.setStatus(Status.DONE);

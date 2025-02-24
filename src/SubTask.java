@@ -1,23 +1,19 @@
 public class SubTask extends Task {
-    private Epic epic;
+    private int epic;
 
-    public SubTask(String title, String describe, Epic headTask) {
+    public SubTask(String title, String describe, int epic) {
         super(title, describe);
-        this.epic = headTask;
+        this.epic = epic;
     }
 
-    public Epic getEpic() {
+    public int getEpic() {
         return epic;
-    }
-
-    public void delete() {
-        this.epic.deleteSubTask(this);
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "epic=" + epic.id +
+                "epic=" + epic +
                 ", title='" + title + '\'' +
                 ", describe='" + describe + '\'' +
                 ", id=" + id +
