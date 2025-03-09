@@ -10,7 +10,7 @@ public class Task {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id;
+        return id == task.id && Objects.equals(title, task.title) && Objects.equals(describe, task.describe) && status == task.status;
     }
 
     @Override

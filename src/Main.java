@@ -3,7 +3,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Поехали!");
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         Task task1 = new Task("ts1","ts11111");
         Task task2 = new Task("ts2","ts22222");
@@ -26,9 +26,9 @@ public class Main {
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpic());
-        System.out.println(taskManager.getSubTaskByEpic(2));
+        System.out.println(taskManager.getSubTaskByEpic(3));
 
-        SubTask subtask = taskManager.getSubTask(6);
+        SubTask subtask = taskManager.getSubTask(7);
         subtask.setStatus(Status.DONE);
         taskManager.updateSubTask(subtask);
 
@@ -41,11 +41,11 @@ public class Main {
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpic());*/
 
-        subtask = taskManager.getSubTask(4);
+        subtask = taskManager.getSubTask(5);
         subtask.setStatus(Status.DONE);
         taskManager.updateSubTask(subtask);
 
-        subtask = taskManager.getSubTask(5);
+        subtask = taskManager.getSubTask(6);
         subtask.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubTask(subtask);
 
@@ -54,7 +54,7 @@ public class Main {
         System.out.println(taskManager.getAllEpic());
 
 
-        taskManager.delSubTask(6);
+        taskManager.delSubTask(7);
 
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
@@ -65,6 +65,9 @@ public class Main {
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpic());
+
+        subtask = taskManager.getSubTask(77);
+        System.out.println(Managers.getDefaultHistory().getHistory());
 
     }
 }
