@@ -14,6 +14,11 @@ public class Epic extends Task {
         return Objects.equals(subTasks, epic.subTasks);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subTasks);
+    }
+
     public Epic(String title, String describe) {
         super(title, describe);
         subTasks = new ArrayList<>();

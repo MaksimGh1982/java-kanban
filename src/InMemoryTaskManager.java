@@ -9,19 +9,19 @@ public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
 
     @Override
-    public ArrayList<Task> getAllTask() {
+    public List<Task> getAllTask() {
         ArrayList<Task> values = new ArrayList<>(tasks.values());
         return values;
     }
 
     @Override
-    public ArrayList<SubTask> getAllSubTask() {
+    public List<SubTask> getAllSubTask() {
         ArrayList<SubTask> values = new ArrayList<>(subTasks.values());
         return values;
     }
 
     @Override
-    public ArrayList<Epic> getAllEpic() {
+    public List<Epic> getAllEpic() {
         ArrayList<Epic> values = new ArrayList<>(epics.values());
         return values;
     }
