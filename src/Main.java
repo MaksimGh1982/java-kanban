@@ -48,6 +48,12 @@ public class Main {
         subtask = taskManager.getSubTask(6);
         subtask.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubTask(subtask);
+        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
+
+        subtask = taskManager.getSubTask(5);
+        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
+        subtask = taskManager.getSubTask(6);
+        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
 
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
