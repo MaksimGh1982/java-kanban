@@ -51,7 +51,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void Add(Task task) {
+    public void add(Task task) {
         if (!Objects.isNull(task)) {
             if (mapTasks.containsKey(task.getId())) {
                 removeNode(mapTasks.get(task.getId()));

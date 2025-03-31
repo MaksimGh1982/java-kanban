@@ -9,7 +9,7 @@ class HistoryManagerTest {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @BeforeEach
-    void ClearHistory() {
+    void clearHistory() {
         for (Task task : historyManager.getHistory()) {
             historyManager.remove(task.getId());
         }

@@ -8,7 +8,7 @@ class InMemoryTaskManagerTest {
     private TaskManager taskManager;
 
     @BeforeEach
-    void BeforeEach() {
+    void beforeEach() {
         taskManager = Managers.getDefault();
     }
 
