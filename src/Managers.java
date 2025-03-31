@@ -1,6 +1,6 @@
 public class Managers {
 
-    private final static InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
+    private static final InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();
