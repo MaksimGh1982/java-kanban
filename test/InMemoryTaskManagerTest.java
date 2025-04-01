@@ -8,7 +8,7 @@ class InMemoryTaskManagerTest {
     private TaskManager taskManager;
 
     @BeforeEach
-    void BeforeEach() {
+    void beforeEach() {
         taskManager = Managers.getDefault();
     }
 
@@ -19,8 +19,8 @@ class InMemoryTaskManagerTest {
 
         Task savedTask = taskManager.getTask(id);
 
-        assertNotNull(savedTask, "Задача не найдена.");
-        assertEquals(task, savedTask, "Задачи не совпадают.");
+        assertNotNull(savedTask, "Задача не найдена!");
+        assertEquals(task, savedTask, "Задачи не совпадают!");
 
         List<Task> tasks = taskManager.getAllTask();
 
