@@ -18,13 +18,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private void save() {
         try (Writer fileWriter = new FileWriter(file)) {
             for (Task task : getAllTask()) {
-                fileWriter.write(task.toFileString(TypeTask.TASK)+"\n");
+                fileWriter.write(task.toFileString(TypeTask.TASK) + "\n");
             }
             for (Epic epic: getAllEpic()) {
-                fileWriter.write(epic.toFileString(TypeTask.EPIC)+"\n");
+                fileWriter.write(epic.toFileString(TypeTask.EPIC) + "\n");
             }
             for (SubTask subTask : getAllSubTask()) {
-                fileWriter.write(subTask.toFileString(TypeTask.SUBTASK)+"\n");
+                fileWriter.write(subTask.toFileString(TypeTask.SUBTASK) + "\n");
             }
         } catch (IOException e) {
             throw new ManagerSaveException(e.getMessage());
