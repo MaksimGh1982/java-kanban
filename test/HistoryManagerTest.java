@@ -1,11 +1,16 @@
+import manager.HistoryManager;
+import manager.Managers;
+import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import task.Task;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {
 
     private final TaskManager taskManager = Managers.getDefault();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = taskManager.getHistoryManager();
 
     @BeforeEach
     void clearHistory() {
