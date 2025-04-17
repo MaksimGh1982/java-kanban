@@ -37,15 +37,6 @@ public class Task {
 
     }
 
-    public Task(String value) {
-        String[] stringTask = value.split(",");
-
-        this.title = stringTask[Const.TITLE_POSITION];
-        this.describe = stringTask[Const.DESCRIBE_POSITION];
-        this.status = Status.valueOf(stringTask[Const.STATUS_POSITION]);
-        this.id = (Integer.parseInt(stringTask[Const.ID_POSITION]));
-    }
-
     public Task(String title, String describe) {
         this.title = title;
         this.describe = describe;

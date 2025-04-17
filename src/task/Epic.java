@@ -27,11 +27,6 @@ public class Epic extends Task {
         subTasks = new ArrayList<>();
     }
 
-    public Epic(String value) {
-        super(value);
-        subTasks = new ArrayList<>();
-    }
-
     public List<Integer> getSubTasks() {
         return subTasks;
     }

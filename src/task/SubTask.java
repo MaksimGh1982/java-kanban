@@ -10,12 +10,6 @@ public class SubTask extends Task {
         this.epic = epic;
     }
 
-    public SubTask(String value) {
-        super(value);
-        String[] stringTask = value.split(",");
-        this.epic = Integer.parseInt(stringTask[Const.EPICID_POSITION]);
-    }
-
     public int getEpic() {
         return epic;
     }
