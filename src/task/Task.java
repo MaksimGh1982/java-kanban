@@ -1,4 +1,8 @@
+package task;
+
 import java.util.Objects;
+
+import general.*;
 
 public class Task {
     protected String title;
@@ -20,12 +24,17 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "task.Task{" +
                 "title='" + title + '\'' +
                 ", describe='" + describe + '\'' +
                 ", id=" + id +
                 ", status=" + status +
                 '}';
+    }
+
+    public String toFileString(TypeTask typeTask) {
+        return id + "," + typeTask.toString() + "," + title + ","  + status + ","  + describe;
+
     }
 
     public Task(String title, String describe) {

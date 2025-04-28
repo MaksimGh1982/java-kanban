@@ -1,11 +1,18 @@
+package manager;
+
+import task.Epic;
+import task.SubTask;
+import task.Task;
+import general.*;
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, SubTask> subTasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, SubTask> subTasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected HistoryManager historyManager = Managers.getDefaultHistory();
     private int id = 0;
 
     @Override
@@ -24,6 +31,11 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Epic> getAllEpic() {
         ArrayList<Epic> values = new ArrayList<>(epics.values());
         return values;
+    }
+
+    @Override
+    public HistoryManager getHistoryManager() {
+        return historyManager;
     }
 
     @Override
@@ -155,7 +167,7 @@ public class InMemoryTaskManager implements TaskManager {
         int countProgress = 0;
         for (Integer subtaskId : epic.getSubTasks()) {
             SubTask subtask = subTasks.get(subtaskId);
-            switch (subtask.status) {
+            switch (subtask.getStatus()) {
                 case NEW:
                     countNew++;
                     break;

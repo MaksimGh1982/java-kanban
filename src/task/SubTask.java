@@ -1,3 +1,7 @@
+package task;
+
+import general.*;
+
 public class SubTask extends Task {
     private int epic;
 
@@ -12,7 +16,7 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "SubTask{" +
+        return "task.SubTask{" +
                 "epic=" + epic +
                 ", title='" + title + '\'' +
                 ", describe='" + describe + '\'' +
@@ -20,4 +24,13 @@ public class SubTask extends Task {
                 ", status=" + status +
                 '}';
     }
+
+    @Override
+    public String toFileString(TypeTask typeTask) {
+        return super.toFileString(typeTask) + "," + epic;
+
+    }
+
+
+
 }

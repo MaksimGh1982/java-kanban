@@ -1,3 +1,10 @@
+import general.Status;
+import manager.Managers;
+import manager.TaskManager;
+import task.Epic;
+import task.SubTask;
+import task.Task;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -48,12 +55,12 @@ public class Main {
         subtask = taskManager.getSubTask(6);
         subtask.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubTask(subtask);
-        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
+        System.out.println("Hist " + taskManager.getHistoryManager().getHistory());
 
         subtask = taskManager.getSubTask(5);
-        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
+        System.out.println("Hist " + taskManager.getHistoryManager().getHistory());
         subtask = taskManager.getSubTask(6);
-        System.out.println("Hist " + Managers.getDefaultHistory().getHistory());
+        System.out.println("Hist " + taskManager.getHistoryManager().getHistory());
 
         System.out.println(taskManager.getAllTask());
         System.out.println(taskManager.getAllSubTask());
@@ -73,7 +80,7 @@ public class Main {
         System.out.println(taskManager.getAllEpic());
 
         subtask = taskManager.getSubTask(77);
-        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
 
     }
 }

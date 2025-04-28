@@ -1,3 +1,7 @@
+package manager;
+
+import task.Task;
+
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -5,9 +9,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     private Node tail;
 
-    private Map<Integer,Node> mapTasks = new HashMap<>();
+    private Map<Integer, Node> mapTasks = new HashMap<>();
 
-    public Node linkLast(Task task) {
+    private Node linkLast(Task task) {
         Node newNode = new Node(task);
         newNode.setPriorNode(tail);
         if (Objects.isNull(head)) {
@@ -20,7 +24,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         return newNode;
     }
 
-    public void removeNode(Node node) {
+    private void removeNode(Node node) {
         if (node == head && node == tail) {
             head = null;
             tail = null;

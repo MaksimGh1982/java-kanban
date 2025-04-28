@@ -1,5 +1,13 @@
+import general.Status;
+import manager.Managers;
+import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import task.Epic;
+import task.SubTask;
+import task.Task;
+
+import java.io.File;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +17,8 @@ class InMemoryTaskManagerTest {
 
     @BeforeEach
     void beforeEach() {
+        File myFile = new File("filewriter.txt");
+        myFile.delete();
         taskManager = Managers.getDefault();
     }
 

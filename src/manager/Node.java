@@ -1,3 +1,7 @@
+package manager;
+
+import task.Task;
+
 public class Node {
     private Node priorNode;
     private Node nextNode;
