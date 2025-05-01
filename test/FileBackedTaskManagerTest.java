@@ -58,7 +58,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<TaskManager> {
     @Test
     public void testException() {
         assertThrows(ManagerSaveException.class, () -> {
-            TaskManager taskManagerErr = new FileBackedTaskManager("N:\\NoFile.txt","N:\\NoFile.txt");
+            TaskManager taskManagerErr = new FileBackedTaskManager("?.txt","?.txt");
             Task task = new Task("Test GetNewTask", "Test GetNewTask description", LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
             int id = taskManagerErr.addTask(task);
         }, "ManagerSaveException was expected");
