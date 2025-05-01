@@ -46,4 +46,6 @@ public interface TaskManager {
     void delEpic(Integer id);
 
     HistoryManager getHistoryManager();
+
+    List<Task> getPrioritizedTasks();
 }

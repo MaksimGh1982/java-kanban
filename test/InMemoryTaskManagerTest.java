@@ -1,4 +1,6 @@
 import general.Status;
+import manager.FileBackedTaskManager;
+import manager.InMemoryTaskManager;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,23 +10,24 @@ import task.SubTask;
 import task.Task;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<TaskManager> {
 
-    private TaskManager taskManager;
+    //private TaskManager taskManager;
 
     @BeforeEach
     void beforeEach() {
-        File myFile = new File("filewriter.txt");
-        myFile.delete();
-        taskManager = Managers.getDefault();
+        taskManager = new InMemoryTaskManager();
     }
 
     @Test
     void addTask() {
-        Task task = new Task("Test addNewTask", "Test addNewTask description");
+        Task task = new Task("Test addNewTask", "Test addNewTask description",LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
         int id = taskManager.addTask(task);
 
         Task savedTask = taskManager.getTask(id);
@@ -32,16 +35,14 @@ class InMemoryTaskManagerTest {
         assertNotNull(savedTask, "Задача не найдена!");
         assertEquals(task, savedTask, "Задачи не совпадают!");
 
-        List<Task> tasks = taskManager.getAllTask();
-
-        assertNotNull(tasks, "Задачи не возвращаются.");
-        assertEquals(1, tasks.size(), "Неверное количество задач.");
-        assertEquals(task, tasks.get(0), "Задачи не совпадают.");
+        assertNotNull(taskManager.getAllTask(), "Задачи не возвращаются.");
+        assertEquals(1, taskManager.getAllTask().size(), "Неверное количество задач.");
+        assertEquals(task, taskManager.getAllTask().get(0), "Задачи не совпадают.");
     }
 
     @Test
     void getTask() {
-        Task task = new Task("Test GetNewTask", "Test GetNewTask description");
+        Task task = new Task("Test GetNewTask", "Test GetNewTask description",LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
         int id = taskManager.addTask(task);
 
         Task savedTask = taskManager.getTask(id);
@@ -57,7 +58,7 @@ class InMemoryTaskManagerTest {
     void getSubTask() {
         Epic epic = new Epic("Test GetNewSubTask", "Test GetNewSubTask description");
         int idEpic = taskManager.addEpic(epic);
-        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",epic.getId());
+        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",idEpic,LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
         int id = taskManager.addSubTask(subTask);
 
         SubTask savedSubTask = taskManager.getSubTask(id);
@@ -70,67 +71,10 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void getEpic() {
-        Epic epic = new Epic("Test GetNewEpic", "Test GetNewEpick description");
-        int id = taskManager.addEpic(epic);
-
-        Epic savedEpic = taskManager.getEpic(id);
-        Epic savedEpic1 = taskManager.getEpic(id);
-
-        assertNotNull(savedEpic, "Эпик не найден.");
-        assertNotNull(savedEpic1, "Эпик не найден.");
-        assertEquals(savedEpic, epic, "Эпики не совпадают.");
-        assertEquals(savedEpic, savedEpic1, "Эпики не совпадают.");
-    }
-
-    @Test
-    void clearEpic() {
-        Epic epic = new Epic("Test GetNewSubTask", "Test GetNewSubTask description");
-        int idEpic = taskManager.addEpic(epic);
-        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",epic.getId());
-        int idSubTask = taskManager.addSubTask(subTask);
-
-        taskManager.clearEpics();
-        assertEquals(0,taskManager.getAllEpic().size(),"Не все эпики удалены");
-        assertEquals(0,taskManager.getAllSubTask().size(),"Не все подзадачи удалены");
-    }
-
-    @Test
-    void StatusEpicTest() {
-        Epic epic = new Epic("Test GetNewSubTask", "Test GetNewSubTask description");
-        int idEpic = taskManager.addEpic(epic);
-        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",epic.getId());
-        int idSubTask = taskManager.addSubTask(subTask);
-
-        subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",epic.getId());
-        int idSubTask1 = taskManager.addSubTask(subTask);
-
-        SubTask getSubTask = taskManager.getSubTask(idSubTask);
-        getSubTask.setStatus(Status.IN_PROGRESS);
-        taskManager.updateSubTask(getSubTask);
-
-        assertEquals(taskManager.getEpic(idEpic).getStatus(),Status.IN_PROGRESS,"Неверный статус эпика");
-
-        getSubTask = taskManager.getSubTask(idSubTask);
-        getSubTask.setStatus(Status.DONE);
-        taskManager.updateSubTask(getSubTask);
-
-        getSubTask = taskManager.getSubTask(idSubTask1);
-        getSubTask.setStatus(Status.DONE);
-        taskManager.updateSubTask(getSubTask);
-
-        assertEquals(taskManager.getEpic(idEpic).getStatus(),Status.DONE,"Неверный статус эпика");
-
-        taskManager.delSubTask(idSubTask);
-        taskManager.delSubTask(idSubTask1);
-        assertEquals(taskManager.getEpic(idEpic).getStatus(),Status.NEW,"Неверный статус эпика");
-    }
-
-    @Test
     void DelSubTaskTest() {
         Epic epic = new Epic("Test GetNewSubTask", "Test GetNewSubTask description");
         int idEpic = taskManager.addEpic(epic);
-        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",epic.getId());
+        SubTask subTask = new SubTask("Test GetNewSubTask","Test GetNewSubTask description",idEpic,LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
         int idSubTask = taskManager.addSubTask(subTask);
 
         taskManager.delSubTask(idSubTask);

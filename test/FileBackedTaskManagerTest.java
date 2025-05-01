@@ -1,3 +1,5 @@
+import general.ManagerSaveException;
+import manager.FileBackedTaskManager;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -5,22 +7,27 @@ import org.junit.jupiter.api.Test;
 import task.*;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class FileBackedTaskManagerTest {
-
-    private TaskManager taskManager;
+public class FileBackedTaskManagerTest extends TaskManagerTest<TaskManager> {
 
     @BeforeEach
     void beforeEach() {
-        File myFile = new File("filewriter.txt");
-        myFile.delete();
-        taskManager = Managers.getDefault();
+        //File myFile = new File("filewriter.txt");
+        //myFile.delete();
+        taskManager = new FileBackedTaskManager("filewriter.txt","filehistory.txt");
     }
 
     @Test
     void checkFileBacked() {
+        File myFile = new File("filewriter.txt");
+        myFile.delete();
+        taskManager = new FileBackedTaskManager("filewriter.txt","filehistory.txt");
         int[] epicId = new int[5];
         for (int i = 0; i < 20; i++) {
             Task task = new Task("Test NewTask1", "Test NewTask description1");
@@ -46,5 +53,14 @@ public class FileBackedTaskManagerTest {
 
         assertEquals(taskManager.getHistoryManager().getHistory(), taskManagerFromFile.getHistoryManager().getHistory(),
                 "Восстановленная история не равна исходной");
+    }
+
+    @Test
+    public void testException() {
+        assertThrows(ManagerSaveException.class, () -> {
+            TaskManager taskManagerErr = new FileBackedTaskManager("N:\\NoFile.txt","N:\\NoFile.txt");
+            Task task = new Task("Test GetNewTask", "Test GetNewTask description", LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
+            int id = taskManagerErr.addTask(task);
+        }, "ManagerSaveException was expected");
     }
 }

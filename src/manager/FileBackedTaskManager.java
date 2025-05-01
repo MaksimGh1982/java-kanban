@@ -1,6 +1,5 @@
 package manager;
 
-import general.Status;
 import task.Epic;
 import task.SubTask;
 import task.Task;
@@ -81,23 +80,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     String[] stringTask = line.split(",");
 
                     if (TypeTask.valueOf(stringTask[Const.TYPE_TASK_POSITION]) == TypeTask.TASK) {
-                        Task task = new Task(stringTask[Const.TITLE_POSITION], stringTask[Const.DESCRIBE_POSITION]);
-                        task.setStatus(Status.valueOf(stringTask[Const.STATUS_POSITION]));
-                        task.setId(Integer.parseInt(stringTask[Const.ID_POSITION]));
+                        Task task = new Task(line);
                         tasks.put(task.getId(), task);
+                        addTaskInSortList(task);
                     } else if (TypeTask.valueOf(stringTask[Const.TYPE_TASK_POSITION]) == TypeTask.SUBTASK) {
-                        SubTask subTask = new SubTask(stringTask[Const.TITLE_POSITION],
-                                stringTask[Const.DESCRIBE_POSITION],
-                                Integer.parseInt(stringTask[Const.EPIC_ID_POSITION]));
-                        subTask.setStatus(Status.valueOf(stringTask[Const.STATUS_POSITION]));
-                        subTask.setId(Integer.parseInt(stringTask[Const.ID_POSITION]));
+                        SubTask subTask = new SubTask(line);
                         subTasks.put(subTask.getId(), subTask);
+                        addTaskInSortList(subTask);
                         epics.get(subTask.getEpic()).getSubTasks().add(subTask.getId());
                     } else if (TypeTask.valueOf(stringTask[Const.TYPE_TASK_POSITION]) == TypeTask.EPIC) {
-                        Epic epic = new Epic(stringTask[Const.TITLE_POSITION], stringTask[Const.DESCRIBE_POSITION]);
-                        epic.setStatus(Status.valueOf(stringTask[Const.STATUS_POSITION]));
-                        epic.setId(Integer.parseInt(stringTask[Const.ID_POSITION]));
+                        Epic epic = new Epic(line);
                         epics.put(epic.getId(), epic);
+                    }
+                    if (id < Integer.parseInt(stringTask[Const.ID_POSITION])) {
+                        id = Integer.parseInt(stringTask[Const.ID_POSITION]) + 1;
                     }
                 }
             } catch (FileNotFoundException e) {
