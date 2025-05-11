@@ -82,16 +82,20 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public int updateTask(Task task) {
         if (!checkCross(task)) {
             tasks.put(task.getId(), task);
             sortTasks.remove(task);
             sortTasks.add(task);
+            return task.getId();
+        } else {
+            return 0;
         }
+
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) {
+    public int updateSubTask(SubTask subTask) {
         if (!checkCross(subTask)) {
             subTasks.put(subTask.getId(), subTask);
             Epic epic = epics.get(subTask.getEpic());
@@ -101,7 +105,11 @@ public class InMemoryTaskManager implements TaskManager {
             }
             sortTasks.remove(subTask);
             sortTasks.add(subTask);
+            return subTask.getId();
+        } else {
+            return 0;
         }
+
     }
 
     @Override
