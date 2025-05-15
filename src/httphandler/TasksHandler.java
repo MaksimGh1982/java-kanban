@@ -22,8 +22,7 @@ public class TasksHandler extends BaseHttpHandler {
                 taskManager.addTask(task);
             }
             code = Const.CODE_SUCCESS_FOR_CREATE_UPD;
-        }
-        catch (TaskAcrossException e) {
+        } catch (TaskAcrossException e) {
             code = Const.CODE_ACCROSS_ERROR;
         }
     }
@@ -34,8 +33,7 @@ public class TasksHandler extends BaseHttpHandler {
         if (paramId > 0) {
             try {
                 response = gson.toJson(taskManager.getTask(paramId));
-            }
-            catch (NotFoundException e) {
+            } catch (NotFoundException e) {
                 code = Const.CODE_NOT_FOUND;
                 response = "";
             }

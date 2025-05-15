@@ -34,8 +34,7 @@ public class EpicsHandler extends BaseHttpHandler {
                 } else {
                     response = gson.toJson(epic);
                 }
-            }
-            catch (NotFoundException e) {
+            } catch (NotFoundException e) {
                 code = Const.CODE_NOT_FOUND;
                 response = "";
             }
