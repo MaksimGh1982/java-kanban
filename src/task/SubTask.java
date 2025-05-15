@@ -44,7 +44,4 @@ public class SubTask extends Task {
         return super.toFileString(typeTask) + "," + epic;
 
     }
-
-
-
 }

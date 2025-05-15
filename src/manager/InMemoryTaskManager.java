@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class InMemoryTaskManager implements TaskManager {
 
     protected Map<Integer, Task> tasks = new HashMap<>();
@@ -52,7 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
             addTaskInSortList(task);
             return id;
         } else {
-            return 0;
+            throw new TaskAcrossException("Пересечение задач");
         }
     }
 
@@ -70,7 +71,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
             return id;
         } else {
-            return 0;
+            throw new TaskAcrossException("Пересечение задач");
         }
     }
 
@@ -82,16 +83,20 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public int updateTask(Task task) {
         if (!checkCross(task)) {
             tasks.put(task.getId(), task);
             sortTasks.remove(task);
             sortTasks.add(task);
+            return task.getId();
+        } else {
+            throw new TaskAcrossException("Пересечение задач");
         }
+
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) {
+    public int updateSubTask(SubTask subTask) {
         if (!checkCross(subTask)) {
             subTasks.put(subTask.getId(), subTask);
             Epic epic = epics.get(subTask.getEpic());
@@ -101,7 +106,11 @@ public class InMemoryTaskManager implements TaskManager {
             }
             sortTasks.remove(subTask);
             sortTasks.add(subTask);
+            return subTask.getId();
+        } else {
+            throw new TaskAcrossException("Пересечение задач");
         }
+
     }
 
     @Override
@@ -139,19 +148,34 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(Integer idTask) {
         historyManager.add(tasks.get(idTask));
-        return tasks.get(idTask);
+        Task task = tasks.get(idTask);
+        if (Objects.isNull(task)) {
+            throw new NotFoundException("Task не существует");
+        } else {
+            return task;
+        }
     }
 
     @Override
     public SubTask getSubTask(Integer idSubTask) {
         historyManager.add(subTasks.get(idSubTask));
-        return subTasks.get(idSubTask);
+        SubTask subTask = subTasks.get(idSubTask);
+        if (Objects.isNull(subTask)) {
+            throw new NotFoundException("SubTask не существует");
+        } else {
+            return subTask;
+        }
     }
 
     @Override
     public Epic getEpic(Integer idEpic) {
         historyManager.add(epics.get(idEpic));
-        return epics.get(idEpic);
+        Epic epic = epics.get(idEpic);
+        if (Objects.isNull(epic)) {
+            throw new NotFoundException("epic не существует");
+        } else {
+            return epic;
+        }
     }
 
     @Override
@@ -239,7 +263,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (Objects.isNull(startTime)) {
                     startTime = subtask.getStartTime();
                 } else if (subtask.getStartTime().isBefore(startTime)) {
-                        startTime = subtask.getStartTime();
+                    startTime = subtask.getStartTime();
                 }
 
                 if (Objects.isNull(endTime)) {
@@ -272,6 +296,9 @@ public class InMemoryTaskManager implements TaskManager {
     private boolean checkCross(Task newTask) {
         List<Task> sortedTasks = getPrioritizedTasks();
         long count = sortedTasks.stream()
+                .filter(task -> {
+                    return task.getId() != newTask.getId();
+                })
                 .filter(task -> {
                     if (ChronoUnit.SECONDS.between(newTask.getStartTime().plus(newTask.getDuration()), task.getStartTime()) >= 0 ||
                             ChronoUnit.SECONDS.between(task.getStartTime().plus(task.getDuration()), newTask.getStartTime()) >= 0) {

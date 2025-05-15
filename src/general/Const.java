@@ -11,4 +11,10 @@ public class Const {
     public static final int DURATION_POSITION = 6;
     public static final int ENDTIME_POSITION = 7;
     public static final int EPIC_ID_POSITION = 7;
+
+    public static final int CODE_SUCCESS = 200;
+    public static final int CODE_SUCCESS_FOR_CREATE_UPD = 201;
+    public static final int CODE_NOT_FOUND = 404;
+    public static final int CODE_ACCROSS_ERROR = 406;
+    public static final int CODE_HTTP_ERROR = 400;
 }

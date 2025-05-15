@@ -47,7 +47,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         taskManager.addEpic(epic1);
 
         SubTask subtask1 = new SubTask("subtask1","subtask1111",epic1.getId(), LocalDateTime.now().plus(4, ChronoUnit.DAYS), Duration.ofDays(1));
-        SubTask subtask2 = new SubTask("subtask2","subtask22222",epic1.getId(), LocalDateTime.now().plus(5, ChronoUnit.DAYS), Duration.ofDays(2));
+        SubTask subtask2 = new SubTask("subtask2","subtask22222",epic1.getId(), LocalDateTime.now().plus(5, ChronoUnit.DAYS), Duration.ofDays(1));
         SubTask subtask3 = new SubTask("subtask3","subtask33333",epic1.getId(), LocalDateTime.now().plus(6, ChronoUnit.DAYS), Duration.ofDays(1));
         taskManager.addSubTask(subtask1);
         taskManager.addSubTask(subtask2);

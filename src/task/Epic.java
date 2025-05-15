@@ -70,6 +70,6 @@ public class Epic extends Task {
     @Override
     public String toFileString(TypeTask typeTask) {
         return super.toFileString(typeTask) +
-                (Objects.nonNull(endTime) ? ","  + endTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : ",null");
+                (Objects.nonNull(endTime) ? "," + endTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : ",null");
     }
 }

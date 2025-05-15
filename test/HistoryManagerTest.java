@@ -1,27 +1,34 @@
 import manager.HistoryManager;
-import manager.Managers;
+import manager.InMemoryTaskManager;
 import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import task.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {
 
-    private final TaskManager taskManager = Managers.getDefault();
-    private final HistoryManager historyManager = taskManager.getHistoryManager();
+    private  TaskManager taskManager;
+    private  HistoryManager historyManager;
 
     @BeforeEach
     void clearHistory() {
+        taskManager = new InMemoryTaskManager();
+        historyManager = taskManager.getHistoryManager();
         for (Task task : historyManager.getHistory()) {
             historyManager.remove(task.getId());
         }
+
     }
 
     @Test
     void addHistory() {
-        Task task = new Task("Test GetNewTask", "Test GetNewTask description");
+        Task task = new Task("Test GetNewTask", "Test GetNewTask description",LocalDateTime.now().plus(1, ChronoUnit.DAYS), Duration.ofDays(1));
         int id = taskManager.addTask(task);
 
         Task savedTask = taskManager.getTask(id);

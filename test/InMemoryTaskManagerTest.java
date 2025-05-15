@@ -1,7 +1,5 @@
-import general.Status;
-import manager.FileBackedTaskManager;
+import general.NotFoundException;
 import manager.InMemoryTaskManager;
-import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,16 +7,12 @@ import task.Epic;
 import task.SubTask;
 import task.Task;
 
-import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<TaskManager> {
-
-    //private TaskManager taskManager;
 
     @BeforeEach
     void beforeEach() {
@@ -78,7 +72,9 @@ class InMemoryTaskManagerTest extends TaskManagerTest<TaskManager> {
         int idSubTask = taskManager.addSubTask(subTask);
 
         taskManager.delSubTask(idSubTask);
-        assertNull(taskManager.getSubTask(idSubTask), "Найдена удаленная подзадача");
+        assertThrows(NotFoundException.class, () -> {
+            SubTask subtask = taskManager.getSubTask(idSubTask);
+        }, "NotFoundException was expected");
         assertEquals(epic.getSubTasks().size(), 0, "Найдена удаленная подзадача в спивке эпика");
 
     }
