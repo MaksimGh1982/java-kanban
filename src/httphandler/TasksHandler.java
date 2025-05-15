@@ -1,25 +1,25 @@
-package httpHandler;
+package httphandler;
 
 import general.Const;
 import general.NotFoundException;
 import general.TaskAcrossException;
 import manager.TaskManager;
-import task.SubTask;
+import task.Task;
 
-public class SubTasksHandler extends BaseHttpHandler {
+public class TasksHandler extends BaseHttpHandler {
 
-    public SubTasksHandler(TaskManager taskManager) {
+    public TasksHandler(TaskManager taskManager) {
         super(taskManager);
     }
 
     @Override
     protected void post() {
-        SubTask subTask = gson.fromJson(jsonBody, SubTask.class);
+        Task task = gson.fromJson(jsonBody, Task.class);
         try {
-            if (subTask.getId() > 0) {
-                taskManager.updateSubTask(subTask);
+            if (task.getId() > 0) {
+                taskManager.updateTask(task);
             } else {
-                taskManager.addSubTask(subTask);
+                taskManager.addTask(task);
             }
             code = Const.CODE_SUCCESS_FOR_CREATE_UPD;
         }
@@ -33,21 +33,21 @@ public class SubTasksHandler extends BaseHttpHandler {
         code = Const.CODE_SUCCESS;
         if (paramId > 0) {
             try {
-                response = gson.toJson(taskManager.getSubTask(paramId));
+                response = gson.toJson(taskManager.getTask(paramId));
             }
             catch (NotFoundException e) {
                 code = Const.CODE_NOT_FOUND;
                 response = "";
             }
         } else {
-            response = gson.toJson(taskManager.getAllSubTask());
+            response = gson.toJson(taskManager.getAllTask());
         }
     }
 
     @Override
     protected void delete() {
         if (paramId > 0) {
-            taskManager.delSubTask(paramId);
+            taskManager.delTask(paramId);
         }
         code = Const.CODE_SUCCESS;
     }
