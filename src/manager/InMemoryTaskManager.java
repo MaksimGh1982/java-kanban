@@ -263,7 +263,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (Objects.isNull(startTime)) {
                     startTime = subtask.getStartTime();
                 } else if (subtask.getStartTime().isBefore(startTime)) {
-                        startTime = subtask.getStartTime();
+                    startTime = subtask.getStartTime();
                 }
 
                 if (Objects.isNull(endTime)) {
@@ -296,7 +296,9 @@ public class InMemoryTaskManager implements TaskManager {
     private boolean checkCross(Task newTask) {
         List<Task> sortedTasks = getPrioritizedTasks();
         long count = sortedTasks.stream()
-                .filter( task -> { return task.getId() != newTask.getId(); } )
+                .filter(task -> {
+                    return task.getId() != newTask.getId();
+                })
                 .filter(task -> {
                     if (ChronoUnit.SECONDS.between(newTask.getStartTime().plus(newTask.getDuration()), task.getStartTime()) >= 0 ||
                             ChronoUnit.SECONDS.between(task.getStartTime().plus(task.getDuration()), newTask.getStartTime()) >= 0) {
