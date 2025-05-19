@@ -46,9 +46,9 @@ public class Task {
     }
 
     public String toFileString(TypeTask typeTask) {
-        return id + "," + typeTask.toString() + "," + title + ","  + status + ","  + describe +
-                (Objects.nonNull(startTime) ? ","  + startTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) +
-                "," + duration.toMinutes() : ",null,null");
+        return id + "," + typeTask.toString() + "," + title + "," + status + "," + describe +
+                (Objects.nonNull(startTime) ? "," + startTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) +
+                        "," + duration.toMinutes() : ",null,null");
 
     }
 
